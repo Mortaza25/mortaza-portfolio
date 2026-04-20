@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
 import { Mail, Send } from 'lucide-react';
 
 const ContactSection = () => {
@@ -13,17 +12,27 @@ const ContactSection = () => {
         setLoading(true);
         setStatus(null);
         try {
-            // Send to your email (FormSubmit.co)
-            await axios.post('https://formsubmit.co/ajax/mortazaaazkaa2509@gmail.com', {
-                name: formData.name,
-                email: formData.email,
-                message: formData.message,
-                _subject: "New Portfolio Message!",
-                _template: "table"
+            const response = await fetch('https://formsubmit.co/ajax/mortazaaazkaa2509@gmail.com', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    message: formData.message,
+                    _subject: "New Portfolio Message!",
+                    _template: "table"
+                })
             });
 
-            setStatus('success');
-            setFormData({ name: '', email: '', message: '' });
+            if (response.ok) {
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+            } else {
+                throw new Error('Form submission failed');
+            }
         } catch (err) {
             setStatus('error');
             console.error("Submission error:", err);
