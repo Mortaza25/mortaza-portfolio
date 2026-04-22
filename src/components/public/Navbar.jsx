@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [activeLink, setActiveLink] = useState('hero');
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,6 +24,10 @@ const Navbar = () => {
         { name: 'Contact', to: 'contact' },
     ];
 
+    const handleSetActive = (to) => {
+        setActiveLink(to);
+    };
+
     return (
         <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-transparent ${scrolled ? 'bg-white/90 backdrop-blur-md border-gray-100 shadow-sm py-4' : 'bg-transparent py-4 md:py-6'}`}>
             <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
@@ -38,13 +43,13 @@ const Navbar = () => {
                             to={link.to}
                             spy={true}
                             smooth={true}
-                            offset={-72}
+                            offset={-80}
                             duration={500}
-                            activeClass="active"
+                            onSetActive={handleSetActive}
                             className="relative cursor-pointer text-dark font-semibold transition-all duration-300 group"
                         >
                             {link.name}
-                            <span className="absolute left-0 bottom-[-6px] w-0 h-[2.5px] bg-dark transition-all duration-300 group-hover:w-full group-[.active]:w-full group-[.active.active]:w-full"></span>
+                            <span className={`absolute left-0 bottom-[-6px] h-[2.5px] bg-dark transition-all duration-300 group-hover:w-full ${activeLink === link.to ? 'w-full' : 'w-0'}`}></span>
                         </Link>
                     ))}
                 </div>
@@ -74,16 +79,16 @@ const Navbar = () => {
                                     to={link.to}
                                     spy={true}
                                     smooth={true}
-                                    offset={-72}
+                                    offset={-80}
                                     duration={500}
-                                    activeClass="active"
+                                    onSetActive={handleSetActive}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className="text-2xl font-bold text-dark py-4 flex items-center justify-between cursor-pointer transition-colors group"
+                                    className="text-2xl font-bold text-dark py-4 flex items-center justify-between cursor-pointer transition-colors"
                                 >
                                     {link.name}
-                                    <span className="text-gray-300 text-sm font-light group-[.active]:hidden">→</span>
+                                    <span className={`text-gray-300 text-sm font-light ${activeLink === link.to ? 'hidden' : ''}`}>→</span>
                                 </Link>
-                                <span className="absolute left-0 bottom-2 w-0 h-[3px] bg-dark transition-all duration-300 group-hover:w-full group-[.active]:w-full"></span>
+                                <span className={`absolute left-0 bottom-2 h-[3px] bg-dark transition-all duration-300 group-hover:w-full ${activeLink === link.to ? 'w-full' : 'w-0'}`}></span>
                             </div>
                         ))}
                         <div className="pt-6 flex gap-6">

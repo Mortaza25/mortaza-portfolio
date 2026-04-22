@@ -49,7 +49,7 @@ const HeroSection = () => {
                     </motion.p>
 
                     <div className="mb-3 md:mb-6 min-h-[60px] xs:min-h-[70px] md:min-h-[80px]">
-                        <h1 className="text-[28px] xs:text-4xl sm:text-5xl md:text-6xl font-bold text-dark tracking-tighter leading-[1.2] md:leading-tight">
+                        <h1 className="text-[28px] xs:text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold text-dark tracking-tighter leading-[1.15] md:leading-[1.2] lg:leading-tight">
                             {heroData.headline.split(' ').slice(0, -1).join(' ')}{' '}
                             <TypeAnimation
                                 sequence={[
