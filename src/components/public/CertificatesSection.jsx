@@ -51,22 +51,52 @@ const CertificatesSection = () => {
     // Auto-scroll speed
     const speed = -1.0; 
     
-    useAnimationFrame((t, delta) => {
-        let moveBy = speed * (delta / 16); 
-        baseX.set(baseX.get() + moveBy);
-    });
-
-    const cardWidth = window.innerWidth < 640 ? 304 : (window.innerWidth < 768 ? 344 : 412);
-    const totalWidth = certificatesData.length * cardWidth;
+    const scrollRef = useRef(null);
+    const scrollPos = useRef(0);
+    const isInteracting = useRef(false);
+    const resumeTimeout = useRef(null);
     
-    const x = useTransform(baseX, (v) => `${wrap(-totalWidth, 0, v)}px`);
+    // Auto-scroll logic
+    useEffect(() => {
+        let animationFrame;
+        const scroll = () => {
+            if (!isInteracting.current && scrollRef.current) {
+                // Increment scroll position
+                scrollPos.current += 0.6; // Subtle, smooth movement
+                
+                const cardWidth = window.innerWidth < 640 ? 304 : (window.innerWidth < 768 ? 344 : 412);
+                const setWidth = certificatesData.length * cardWidth;
+                
+                // Infinite wrap
+                if (scrollPos.current >= setWidth) {
+                    scrollPos.current = 0;
+                }
+                
+                scrollRef.current.scrollLeft = scrollPos.current;
+            }
+            animationFrame = requestAnimationFrame(scroll);
+        };
+        
+        animationFrame = requestAnimationFrame(scroll);
+        return () => {
+            cancelAnimationFrame(animationFrame);
+            if (resumeTimeout.current) clearTimeout(resumeTimeout.current);
+        };
+    }, []);
 
-    // Handle Touchpad/Wheel scrolling
-    const onWheel = (e) => {
-        // Update baseX based on deltaX (horizontal scroll) or deltaY (if user is using a vertical wheel)
-        // We prioritize deltaX for true horizontal touchpad scroll
-        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-        baseX.set(baseX.get() - delta * 0.8);
+    const handleInteraction = () => {
+        isInteracting.current = true;
+        if (resumeTimeout.current) clearTimeout(resumeTimeout.current);
+        
+        // Sync scrollPos with the actual native scrollLeft
+        if (scrollRef.current) {
+            scrollPos.current = scrollRef.current.scrollLeft;
+        }
+
+        // Resume auto-scroll after 3 seconds of inactivity
+        resumeTimeout.current = setTimeout(() => {
+            isInteracting.current = false;
+        }, 3000);
     };
 
     return (
@@ -86,26 +116,27 @@ const CertificatesSection = () => {
                 </motion.div>
             </div>
 
-            <div 
-                className="relative w-full overflow-hidden py-4 cursor-default"
-                onWheel={onWheel}
-            >
+            <div className="relative w-full overflow-hidden py-4 cursor-default">
                 <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-[#fcfcfc] to-transparent z-10 pointer-events-none"></div>
                 <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-[#fcfcfc] to-transparent z-10 pointer-events-none"></div>
 
-                <motion.div 
-                    ref={containerRef}
-                    className="flex w-max cursor-default"
-                    style={{ x, willChange: 'transform' }}
+                <div 
+                    ref={scrollRef}
+                    className="flex overflow-x-auto scrollbar-hide select-none cursor-default active:cursor-default"
+                    onScroll={handleInteraction}
+                    onTouchStart={handleInteraction}
+                    onMouseDown={handleInteraction}
+                    style={{ scrollBehavior: 'auto' }}
                 >
-                    {[...Array(4)].map((_, i) => (
+                    {/* Render 3 sets for infinite seamless feel */}
+                    {[...Array(3)].map((_, i) => (
                         <React.Fragment key={i}>
                             {certificatesData.map((cert) => (
                                 <CertCard key={`${cert.id}-${i}`} cert={cert} />
                             ))}
                         </React.Fragment>
                     ))}
-                </motion.div>
+                </div>
             </div>
         </section>
     );
