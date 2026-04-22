@@ -12,7 +12,7 @@ const HeroSection = () => {
     const userImage = heroData.image_url || null;
 
     return (
-        <section id="hero" className="min-h-screen flex items-center justify-center px-6 pt-10 sm:pt-24 md:pt-48 pb-12 relative overflow-hidden">
+        <section id="hero" className="min-h-screen flex items-center justify-center px-4 sm:px-6 pt-10 sm:pt-24 md:pt-48 pb-12 relative overflow-hidden">
             <motion.div 
                 style={{ y: yParallax, opacity: opacityParallax }}
                 className="max-w-4xl mx-auto text-center relative z-10 md:-mt-24"
@@ -21,7 +21,7 @@ const HeroSection = () => {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="flex justify-center mb-3 md:mb-8"
+                    className="flex justify-center mb-2 md:mb-8"
                 >
                     {userImage ? (
                         <div className="relative group">
@@ -30,11 +30,11 @@ const HeroSection = () => {
                             <img 
                                 src={userImage} 
                                 alt="Profile" 
-                                className="relative w-32 h-32 xs:w-44 xs:h-44 md:w-52 md:h-52 rounded-full object-cover shadow-xl md:shadow-2xl border-4 border-white cursor-default grayscale hover:grayscale-0 transition-all duration-700"
+                                className="relative w-28 h-28 xs:w-36 xs:h-36 md:w-52 md:h-52 rounded-full object-cover shadow-xl md:shadow-2xl border-4 border-white cursor-default grayscale hover:grayscale-0 transition-all duration-700"
                             />
                         </div>
                     ) : (
-                        <div className="w-32 h-32 md:w-52 md:h-52 rounded-full bg-gray-100 shadow-xl border-4 border-white"></div>
+                        <div className="w-28 h-28 md:w-52 md:h-52 rounded-full bg-gray-100 shadow-xl border-4 border-white"></div>
                     )}
                 </motion.div>
                 
@@ -48,8 +48,8 @@ const HeroSection = () => {
                         {heroData.greeting}
                     </motion.p>
 
-                    <div className="mb-1 md:mb-6 min-h-[40px] xs:min-h-[60px] md:min-h-[80px]">
-                        <h1 className="text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark tracking-tighter leading-tight md:leading-[1.2] lg:leading-tight">
+                    <div className="mb-1 md:mb-6 min-h-[30px] xs:min-h-[50px] md:min-h-[80px]">
+                        <h1 className="text-base xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark tracking-tighter leading-tight md:leading-[1.2] lg:leading-tight">
                             {heroData.headline.split(' ').slice(0, -1).join(' ')}{' '}
                             <TypeAnimation
                                 sequence={[
@@ -70,7 +70,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
-                        className="text-[13px] md:text-xl text-gray-500 max-w-2xl mx-auto mb-6 md:mb-10 leading-relaxed font-light"
+                        className="text-[11px] md:text-xl text-gray-500 max-w-2xl mx-auto mb-4 md:mb-10 leading-relaxed font-light"
                     >
                         {heroData.description}
                     </motion.p>
@@ -82,7 +82,7 @@ const HeroSection = () => {
                         className="flex justify-center"
                     >
                         <Link to="skills" smooth={true} duration={500} offset={-72}>
-                            <button className="bg-dark text-white px-10 py-4 md:px-12 md:py-5 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-zinc-800 transition-all hover:scale-105 active:scale-95 shadow-xl">
+                            <button className="bg-dark text-white px-8 py-3.5 md:px-12 md:py-5 rounded-full font-bold text-[9px] md:text-xs uppercase tracking-widest hover:bg-zinc-800 transition-all hover:scale-105 active:scale-95 shadow-xl">
                                 {heroData.button_text}
                             </button>
                         </Link>
