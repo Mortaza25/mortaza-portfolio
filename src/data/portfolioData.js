@@ -3,7 +3,7 @@ export const heroData = {
     headline: "Creative Web Developer",
     description: "I build interactive and responsive web applications.",
     button_text: "About Me",
-    image_url: "/uploads/1776646588595.webp"
+    image_url: "/uploads/WhatsApp Image 2026-04-22 at 12.04.32.jpeg"
 };
 
 export const skillsData = [

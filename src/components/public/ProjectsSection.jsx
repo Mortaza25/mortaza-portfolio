@@ -34,8 +34,8 @@ const ProjectsSection = () => {
                     className="mb-12 md:mb-24 flex flex-col md:flex-row md:items-end justify-between border-b border-gray-200 pb-10"
                 >
                     <div className="max-w-2xl">
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark mb-6 tracking-tighter">Selected Works.</h2>
-                        <p className="text-gray-500 text-xl leading-relaxed font-light">A collection of my latest projects, experiments, and case studies.</p>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark mb-4 sm:mb-6 tracking-tighter">Selected Works.</h2>
+                        <p className="text-gray-500 text-lg sm:text-xl leading-relaxed font-light">A collection of my latest projects, experiments, and case studies.</p>
                     </div>
                     <div className="mt-8 md:mt-0 text-gray-400 uppercase tracking-widest text-sm font-semibold">
                         ( {projectsData.length} Projects )
@@ -79,10 +79,10 @@ const ProjectsSection = () => {
                                     </a>
                                 </div>
                                 
-                                <div className="flex flex-col flex-1 p-8 md:p-12 pt-4 md:pt-6">
-                                    <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
-                                        <h3 className="text-3xl font-bold text-dark uppercase tracking-tight">{project.title}</h3>
-                                        <div className="flex flex-wrap items-center gap-3 text-gray-400 text-xl md:pl-4 justify-start md:justify-end">
+                                <div className="flex flex-col flex-1 p-6 sm:p-8 md:p-12 pt-4 md:pt-6">
+                                    <div className="flex flex-col md:flex-row justify-between items-start mb-4 sm:mb-6 gap-3 sm:gap-4">
+                                        <h3 className="text-2xl sm:text-3xl font-bold text-dark uppercase tracking-tight">{project.title}</h3>
+                                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-gray-400 text-lg sm:text-xl md:pl-4 justify-start md:justify-end">
                                             {(project.tech_stack || '').split(',').map((item, idx) => {
                                                 const str = item.trim();
                                                 if (!str) return null;
@@ -93,7 +93,7 @@ const ProjectsSection = () => {
                                             })}
                                         </div>
                                     </div>
-                                    <p className="text-gray-500 mb-10 flex-1 text-lg leading-relaxed font-light">{project.description}</p>
+                                    <p className="text-gray-500 mb-8 sm:mb-10 flex-1 text-base sm:text-lg leading-relaxed font-light">{project.description}</p>
                                     
                                     <a 
                                         href={project.link} 

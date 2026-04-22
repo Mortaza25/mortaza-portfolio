@@ -6,12 +6,10 @@ import ProjectsSection from './ProjectsSection';
 import CertificatesSection from './CertificatesSection';
 import ContactSection from './ContactSection';
 import Footer from './Footer';
-import CustomCursor from './CustomCursor';
 
 const PublicLayout = () => {
     return (
-        <div className="min-h-screen bg-white relative cursor-none">
-            <CustomCursor />
+        <div className="min-h-screen bg-white relative cursor-auto">
             <Navbar />
             <main>
                 <HeroSection />

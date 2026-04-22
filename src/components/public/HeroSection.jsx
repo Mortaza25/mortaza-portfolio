@@ -12,7 +12,7 @@ const HeroSection = () => {
     const userImage = heroData.image_url || null;
 
     return (
-        <section id="hero" className="min-h-screen flex items-center justify-center px-6 pt-32 md:pt-48 pb-12 relative overflow-hidden">
+        <section id="hero" className="min-h-screen flex items-center justify-center px-6 pt-24 sm:pt-32 md:pt-48 pb-12 relative overflow-hidden">
             <motion.div 
                 style={{ y: yParallax, opacity: opacityParallax }}
                 className="max-w-4xl mx-auto text-center relative z-10 md:-mt-24"
@@ -27,7 +27,7 @@ const HeroSection = () => {
                         <img 
                             src={userImage} 
                             alt="Profile" 
-                            className="w-32 h-32 md:w-48 md:h-48 rounded-full object-cover shadow-2xl border-4 border-white cursor-pointer grayscale hover:grayscale-0 transition-all duration-700"
+                            className="w-32 h-32 md:w-48 md:h-48 rounded-full object-cover shadow-2xl border-4 border-white cursor-default grayscale hover:grayscale-0 transition-all duration-700"
                         />
                     ) : (
                         <div className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-gray-100 shadow-2xl border-4 border-white"></div>
@@ -44,8 +44,8 @@ const HeroSection = () => {
                         {heroData.greeting}
                     </motion.p>
 
-                    <div className="mb-4 md:mb-6 min-h-[60px] md:min-h-[80px]">
-                        <h1 className="text-4xl md:text-6xl font-bold text-dark tracking-tight leading-tight">
+                    <div className="mb-4 md:mb-8 min-h-[70px] md:min-h-[80px]">
+                        <h1 className="text-5xl md:text-6xl font-bold text-dark tracking-tight leading-tight">
                             {heroData.headline.split(' ').slice(0, -1).join(' ')}{' '}
                             <TypeAnimation
                                 sequence={[
@@ -75,7 +75,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
-                        className="flex justify-center"
+                        className="flex justify-center mt-4 md:mt-0"
                     >
                         <Link to="skills" smooth={true} duration={500} offset={-72}>
                             <button className="bg-dark text-white px-10 py-5 rounded-full font-medium hover:bg-zinc-800 transition-colors shadow-lg cursor-pointer">

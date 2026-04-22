@@ -62,11 +62,11 @@ const Navbar = () => {
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
+                        initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 w-full bg-white border-b border-gray-100 shadow-xl py-6 px-6 flex flex-col space-y-6 md:hidden z-40"
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                        className="absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-2xl py-8 px-8 flex flex-col space-y-2 md:hidden z-40"
                     >
                         {navLinks.map((link) => (
                             <Link
@@ -77,11 +77,20 @@ const Navbar = () => {
                                 offset={-72}
                                 duration={500}
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="text-xl font-bold text-dark border-b border-gray-50 pb-4 cursor-pointer"
+                                className="text-2xl font-bold text-dark py-4 flex items-center justify-between border-b border-gray-50 last:border-0 cursor-pointer active:text-gray-400 transition-colors"
                             >
                                 {link.name}
+                                <span className="text-gray-300 text-sm font-light">→</span>
                             </Link>
                         ))}
+                        <div className="pt-6 flex gap-6">
+                            <a href="https://github.com/Mortaza25" target="_blank" rel="noopener noreferrer" className="text-dark hover:text-gray-500">
+                                <i className="fa-brands fa-github text-xl"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/azka-mortaza-9818163a5/" target="_blank" rel="noopener noreferrer" className="text-dark hover:text-gray-500">
+                                <i className="fa-brands fa-linkedin text-xl"></i>
+                            </a>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
