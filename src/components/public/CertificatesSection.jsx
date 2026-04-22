@@ -1,14 +1,9 @@
-import React, { useRef } from 'react';
-import { motion, useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { certificatesData } from '../../data/portfolioData';
 
 // Seamless wrapping function
-const wrap = (min, max, v) => {
-    const rangeSize = max - min;
-    return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
-};
-
 const CertCard = ({ cert }) => (
     <div className="bg-white rounded-[2rem] border border-gray-100 shadow-xl shadow-gray-200/30 overflow-hidden group flex flex-col w-[280px] sm:w-[320px] md:w-[380px] shrink-0 mx-3 sm:mx-4 my-6 sm:my-8 pointer-events-auto">
         <div className="p-3 md:p-4 pb-0 md:pb-0">
@@ -45,12 +40,6 @@ const CertCard = ({ cert }) => (
 );
 
 const CertificatesSection = () => {
-    const baseX = useMotionValue(0);
-    const containerRef = useRef(null);
-    
-    // Auto-scroll speed
-    const speed = -1.0; 
-    
     const scrollRef = useRef(null);
     const scrollPos = useRef(0);
     const isInteracting = useRef(false);
