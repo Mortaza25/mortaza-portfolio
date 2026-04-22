@@ -1,15 +1,20 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { certificatesData } from '../../data/portfolioData';
 
-// Seamless wrapping function
+// Helper for seamless wrapping
+const wrap = (min, max, v) => {
+    const rangeSize = max - min;
+    return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
+};
+
 const CertCard = ({ cert }) => (
     <div className="bg-white rounded-[2rem] border border-gray-100 shadow-xl shadow-gray-200/30 overflow-hidden group flex flex-col w-[280px] sm:w-[320px] md:w-[380px] shrink-0 mx-3 sm:mx-4 my-6 sm:my-8 pointer-events-auto">
         <div className="p-3 md:p-4 pb-0 md:pb-0">
             <div className="relative overflow-hidden aspect-[4/3] bg-gray-50 rounded-[1.5rem] md:rounded-[1.8rem] group/img">
                 {cert.drive_url ? (
-                    <a href={cert.drive_url} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
+                    <a href={cert.drive_url} target="_blank" rel="noopener noreferrer" className="block w-full h-full cursor-default">
                         <img
                             src={cert.image}
                             alt={cert.title}
@@ -40,56 +45,73 @@ const CertCard = ({ cert }) => (
 );
 
 const CertificatesSection = () => {
-    const scrollRef = useRef(null);
-    const scrollPos = useRef(0);
+    const baseX = useMotionValue(0);
+    const containerRef = useRef(null);
+    const lastTouchX = useRef(0);
     const isInteracting = useRef(false);
     const resumeTimeout = useRef(null);
-    
-    // Auto-scroll logic
-    useEffect(() => {
-        let animationFrame;
-        const scroll = () => {
-            if (!isInteracting.current && scrollRef.current) {
-                // Increment scroll position
-                scrollPos.current += 0.6; // Subtle, smooth movement
-                
-                const cardWidth = window.innerWidth < 640 ? 304 : (window.innerWidth < 768 ? 344 : 412);
-                const setWidth = certificatesData.length * cardWidth;
-                
-                // Infinite wrap
-                if (scrollPos.current >= setWidth) {
-                    scrollPos.current = 0;
-                }
-                
-                scrollRef.current.scrollLeft = scrollPos.current;
-            }
-            animationFrame = requestAnimationFrame(scroll);
-        };
-        
-        animationFrame = requestAnimationFrame(scroll);
-        return () => {
-            cancelAnimationFrame(animationFrame);
-            if (resumeTimeout.current) clearTimeout(resumeTimeout.current);
-        };
-    }, []);
 
-    const handleInteraction = () => {
+    // Auto-scroll speed
+    const speed = -0.8; 
+
+    useAnimationFrame((t, delta) => {
+        if (!isInteracting.current) {
+            let moveBy = speed * (delta / 16);
+            baseX.set(baseX.get() + moveBy);
+        }
+    });
+
+    // Content width calculation
+    const cardWidth = typeof window !== 'undefined' ? (window.innerWidth < 640 ? 304 : (window.innerWidth < 768 ? 352 : 412)) : 352;
+    const totalContentWidth = certificatesData.length * cardWidth;
+    
+    // Smooth infinite wrapping
+    const x = useTransform(baseX, (v) => `${wrap(-totalContentWidth, 0, v)}px`);
+
+    const isDragging = useRef(false);
+    const lastX = useRef(0);
+
+    const handleInteractionstart = () => {
         isInteracting.current = true;
         if (resumeTimeout.current) clearTimeout(resumeTimeout.current);
-        
-        // Sync scrollPos with the actual native scrollLeft
-        if (scrollRef.current) {
-            scrollPos.current = scrollRef.current.scrollLeft;
-        }
+    };
 
-        // Resume auto-scroll after 3 seconds of inactivity
+    const handleInteractionEnd = () => {
+        isDragging.current = false;
+        if (resumeTimeout.current) clearTimeout(resumeTimeout.current);
         resumeTimeout.current = setTimeout(() => {
             isInteracting.current = false;
-        }, 3000);
+        }, 800);
+    };
+
+    // Touchpad/Wheel Support
+    const onWheel = (e) => {
+        handleInteractionstart();
+        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        baseX.set(baseX.get() - delta * 0.8);
+        handleInteractionEnd();
+    };
+
+    // Mobile Swipe & Mouse Drag Support
+    const onStart = (clientX) => {
+        handleInteractionstart();
+        isDragging.current = true;
+        lastX.current = clientX;
+    };
+
+    const onMove = (clientX) => {
+        if (!isDragging.current) return;
+        const deltaX = clientX - lastX.current;
+        baseX.set(baseX.get() + deltaX);
+        lastX.current = clientX;
+    };
+
+    const onEnd = () => {
+        handleInteractionEnd();
     };
 
     return (
-        <section id="certificates" className="py-16 md:py-32 bg-[#fcfcfc] relative overflow-hidden border-b border-gray-100 cursor-default">
+        <section id="certificates" className="py-16 md:py-32 bg-[#fcfcfc] relative overflow-hidden border-b border-gray-100 cursor-default select-none">
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/p6.png')]"></div>
 
             <div className="max-w-6xl mx-auto w-full px-6 z-10 relative">
@@ -105,27 +127,34 @@ const CertificatesSection = () => {
                 </motion.div>
             </div>
 
-            <div className="relative w-full overflow-hidden py-4 cursor-default">
+            <div 
+                className="relative w-full overflow-hidden py-4 cursor-default select-none active:cursor-default"
+                onWheel={onWheel}
+                onTouchStart={(e) => onStart(e.touches[0].clientX)}
+                onTouchMove={(e) => onMove(e.touches[0].clientX)}
+                onTouchEnd={onEnd}
+                onMouseDown={(e) => onStart(e.clientX)}
+                onMouseMove={(e) => onMove(e.clientX)}
+                onMouseUp={onEnd}
+                onMouseLeave={onEnd}
+            >
                 <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-[#fcfcfc] to-transparent z-10 pointer-events-none"></div>
                 <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-[#fcfcfc] to-transparent z-10 pointer-events-none"></div>
 
-                <div 
-                    ref={scrollRef}
-                    className="flex overflow-x-auto scrollbar-hide select-none cursor-default active:cursor-default"
-                    onScroll={handleInteraction}
-                    onTouchStart={handleInteraction}
-                    onMouseDown={handleInteraction}
-                    style={{ scrollBehavior: 'auto' }}
+                <motion.div 
+                    ref={containerRef}
+                    className="flex w-max cursor-default active:cursor-default select-none"
+                    style={{ x, willChange: 'transform' }}
                 >
-                    {/* Render 3 sets for infinite seamless feel */}
-                    {[...Array(3)].map((_, i) => (
+                    {/* Render enough copies for seamless infinity */}
+                    {[...Array(4)].map((_, i) => (
                         <React.Fragment key={i}>
                             {certificatesData.map((cert) => (
                                 <CertCard key={`${cert.id}-${i}`} cert={cert} />
                             ))}
                         </React.Fragment>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     );
