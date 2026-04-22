@@ -44,7 +44,7 @@ const Navbar = () => {
                             className="relative cursor-pointer text-dark font-semibold transition-all duration-300 group"
                         >
                             {link.name}
-                            <span className="absolute left-0 bottom-[-6px] w-0 h-[2.5px] bg-dark transition-all duration-300 group-hover:w-full group-[.active]:w-full"></span>
+                            <span className="absolute left-0 bottom-[-6px] w-0 h-[2.5px] bg-dark transition-all duration-300 group-hover:w-full group-[.active]:w-full group-[.active.active]:w-full"></span>
                         </Link>
                     ))}
                 </div>
@@ -69,19 +69,22 @@ const Navbar = () => {
                         className="absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-2xl py-8 px-8 flex flex-col space-y-2 md:hidden z-40"
                     >
                         {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                to={link.to}
-                                spy={true}
-                                smooth={true}
-                                offset={-72}
-                                duration={500}
-                                onClick={() => setMobileMenuOpen(false)}
-                                className="text-2xl font-bold text-dark py-4 flex items-center justify-between border-b border-gray-50 last:border-0 cursor-pointer active:text-gray-400 transition-colors"
-                            >
-                                {link.name}
-                                <span className="text-gray-300 text-sm font-light">→</span>
-                            </Link>
+                            <div key={link.name} className="relative group">
+                                <Link
+                                    to={link.to}
+                                    spy={true}
+                                    smooth={true}
+                                    offset={-72}
+                                    duration={500}
+                                    activeClass="active"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="text-2xl font-bold text-dark py-4 flex items-center justify-between cursor-pointer transition-colors group"
+                                >
+                                    {link.name}
+                                    <span className="text-gray-300 text-sm font-light group-[.active]:hidden">→</span>
+                                </Link>
+                                <span className="absolute left-0 bottom-2 w-0 h-[3px] bg-dark transition-all duration-300 group-hover:w-full group-[.active]:w-full"></span>
+                            </div>
                         ))}
                         <div className="pt-6 flex gap-6">
                             <a href="https://github.com/Mortaza25" target="_blank" rel="noopener noreferrer" className="text-dark hover:text-gray-500">

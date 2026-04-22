@@ -12,7 +12,7 @@ const HeroSection = () => {
     const userImage = heroData.image_url || null;
 
     return (
-        <section id="hero" className="min-h-screen flex items-center justify-center px-6 pt-24 sm:pt-32 md:pt-48 pb-12 relative overflow-hidden">
+        <section id="hero" className="min-h-screen flex items-center justify-center px-6 pt-16 sm:pt-24 md:pt-48 pb-12 relative overflow-hidden">
             <motion.div 
                 style={{ y: yParallax, opacity: opacityParallax }}
                 className="max-w-4xl mx-auto text-center relative z-10 md:-mt-24"
@@ -21,19 +21,20 @@ const HeroSection = () => {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="flex justify-center mb-8 md:mb-8"
+                    className="flex justify-center mb-6 md:mb-8"
                 >
                     {userImage ? (
                         <div className="relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-gray-200 to-gray-100 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                            {/* Improved mobile-only presence without glow */}
+                            <div className="absolute -inset-0.5 bg-gray-200 rounded-full md:hidden"></div>
                             <img 
                                 src={userImage} 
                                 alt="Profile" 
-                                className="relative w-40 h-40 xs:w-44 xs:h-44 md:w-52 md:h-52 rounded-full object-cover shadow-2xl border-4 border-white cursor-default grayscale hover:grayscale-0 transition-all duration-700"
+                                className="relative w-36 h-36 xs:w-44 xs:h-44 md:w-52 md:h-52 rounded-full object-cover shadow-xl md:shadow-2xl border-4 border-white cursor-default grayscale hover:grayscale-0 transition-all duration-700"
                             />
                         </div>
                     ) : (
-                        <div className="w-40 h-40 md:w-52 md:h-52 rounded-full bg-gray-100 shadow-2xl border-4 border-white"></div>
+                        <div className="w-36 h-36 md:w-52 md:h-52 rounded-full bg-gray-100 shadow-xl border-4 border-white"></div>
                     )}
                 </motion.div>
                 
@@ -42,13 +43,13 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1, duration: 0.8, ease: "easeOut" }}
-                        className="text-[10px] md:text-sm font-bold text-gray-400 uppercase tracking-[0.3em] mb-2 md:mb-3"
+                        className="text-[11px] md:text-sm font-bold text-gray-400 uppercase tracking-[0.4em] md:tracking-[0.3em] mb-1 md:mb-3"
                     >
                         {heroData.greeting}
                     </motion.p>
 
-                    <div className="mb-4 md:mb-6 min-h-[50px] xs:min-h-[70px] md:min-h-[80px]">
-                        <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold text-dark tracking-tighter leading-tight">
+                    <div className="mb-3 md:mb-6 min-h-[60px] xs:min-h-[70px] md:min-h-[80px]">
+                        <h1 className="text-[28px] xs:text-4xl sm:text-5xl md:text-6xl font-bold text-dark tracking-tighter leading-[1.2] md:leading-tight">
                             {heroData.headline.split(' ').slice(0, -1).join(' ')}{' '}
                             <TypeAnimation
                                 sequence={[
@@ -69,7 +70,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
-                        className="text-sm md:text-xl text-gray-500 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed font-light"
+                        className="text-sm md:text-xl text-gray-500 max-w-2xl mx-auto mb-6 md:mb-10 leading-relaxed font-light"
                     >
                         {heroData.description}
                     </motion.p>

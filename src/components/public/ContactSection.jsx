@@ -42,7 +42,7 @@ const ContactSection = () => {
     };
 
     return (
-        <section id="contact" className="py-20 md:py-32 px-6 bg-white min-h-screen flex flex-col justify-center border-t border-gray-100">
+        <section id="contact" className="py-20 md:py-32 px-6 bg-white min-h-screen flex flex-col justify-center border-t border-gray-100 overflow-hidden">
             <div className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
                 <motion.div
                     initial={{ opacity: 0, x: -30 }}
