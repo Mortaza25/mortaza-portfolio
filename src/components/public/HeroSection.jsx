@@ -82,7 +82,7 @@ const HeroSection = () => {
                         className="flex justify-center"
                     >
                         <Link to="skills" smooth={true} duration={500} offset={-72}>
-                            <button className="bg-dark text-white px-12 py-5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-zinc-800 transition-all hover:scale-105 active:scale-95 shadow-xl">
+                            <button className="bg-dark text-white px-10 py-4 md:px-12 md:py-5 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-zinc-800 transition-all hover:scale-105 active:scale-95 shadow-xl">
                                 {heroData.button_text}
                             </button>
                         </Link>

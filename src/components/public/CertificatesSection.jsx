@@ -34,9 +34,9 @@ const CertCard = ({ cert }) => (
         </div>
 
         <div className="p-6 md:p-7 flex flex-col flex-1">
-            <h3 className="font-bold text-dark text-base md:text-lg mb-3 leading-snug tracking-tight uppercase line-clamp-2">{cert.title}</h3>
+            <h3 className="font-bold text-dark text-[15px] md:text-lg mb-3 leading-snug tracking-tight uppercase line-clamp-2">{cert.title}</h3>
             <div className="mt-auto pt-4 border-t border-gray-50 flex">
-                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">
+                <span className="text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">
                     {cert.issuer}
                 </span>
             </div>
@@ -122,8 +122,8 @@ const CertificatesSection = () => {
                     transition={{ duration: 0.7, ease: 'easeOut' }}
                     className="mb-10 md:mb-24 text-center border-b border-gray-200 pb-10"
                 >
-                    <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-dark mb-4 sm:mb-6 tracking-tight">Certifications & Awards</h2>
-                    <p className="text-gray-500 text-base sm:text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto">Continuous learning and professional recognitions.</p>
+                    <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold text-dark mb-4 sm:mb-6 tracking-tight">Certifications & Awards</h2>
+                    <p className="text-gray-500 text-[14px] sm:text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto">Continuous learning and professional recognitions.</p>
                 </motion.div>
             </div>
 

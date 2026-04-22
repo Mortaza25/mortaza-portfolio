@@ -50,8 +50,8 @@ const ContactSection = () => {
                     viewport={{ once: true, amount: 0.5 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark mb-4 md:mb-6 leading-tight">Let's build<br/>something <span className="text-gray-400">great.</span></h2>
-                    <p className="text-base sm:text-lg text-gray-500 mb-6 sm:mb-8 md:mb-10 leading-relaxed max-w-md">
+                    <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark mb-4 md:mb-6 leading-tight">Let's build<br/>something <span className="text-gray-400">great.</span></h2>
+                    <p className="text-[14px] sm:text-lg text-gray-500 mb-6 sm:mb-8 md:mb-10 leading-relaxed max-w-md">
                         I'm currently available for freelance work or full-time roles. If you have a project that needs some creative touch, I'd love to hear about it.
                     </p>
                     
@@ -80,7 +80,7 @@ const ContactSection = () => {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="bg-gray-50 p-5 sm:p-8 md:p-12 rounded-[2rem]"
                 >
-                    <h3 className="text-2xl font-bold text-dark mb-8">Send a Message</h3>
+                    <h3 className="text-xl md:text-2xl font-bold text-dark mb-8">Send a Message</h3>
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <label className="block text-sm font-medium text-gray-500 mb-2">Your Name</label>
@@ -90,7 +90,7 @@ const ContactSection = () => {
                                     required
                                     value={formData.name}
                                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                    className="w-full bg-white border border-gray-200 rounded-xl px-5 py-4 text-dark focus:outline-none transition-all"
+                                    className="w-full bg-white border border-gray-200 rounded-xl px-5 py-3 md:py-4 text-dark focus:outline-none transition-all"
                                     placeholder="Jhon Doe"
                                 />
                                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-dark transition-all duration-500 group-focus-within:w-full z-10"></span>
@@ -104,7 +104,7 @@ const ContactSection = () => {
                                     required
                                     value={formData.email}
                                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                    className="w-full bg-white border border-gray-200 rounded-xl px-5 py-4 text-dark focus:outline-none transition-all"
+                                    className="w-full bg-white border border-gray-200 rounded-xl px-5 py-3 md:py-4 text-dark focus:outline-none transition-all"
                                     placeholder="jhon@example.com"
                                 />
                                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-dark transition-all duration-500 group-focus-within:w-full z-10"></span>
@@ -131,7 +131,7 @@ const ContactSection = () => {
                             <button 
                                 type="submit" 
                                 disabled={loading}
-                                className="w-full bg-dark text-white rounded-xl py-5 font-semibold hover:bg-zinc-800 transition-colors disabled:opacity-70 shadow-lg cursor-pointer flex items-center justify-center cursor-pointer"
+                                className="w-full bg-dark text-white rounded-xl py-4 md:py-5 font-semibold hover:bg-zinc-800 transition-colors disabled:opacity-70 shadow-lg cursor-pointer flex items-center justify-center cursor-pointer"
                             >
                                 {loading ? 'Sending...' : 'Send Message'} <Send size={18} className="ml-2" />
                             </button>
