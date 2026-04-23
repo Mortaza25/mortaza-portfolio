@@ -34,8 +34,8 @@ const ProjectsSection = () => {
                     className="mb-12 md:mb-24 flex flex-col md:flex-row md:items-end justify-between border-b border-gray-200 pb-10"
                 >
                     <div className="max-w-2xl">
-                        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark mb-4 sm:mb-6 tracking-tighter">Selected Works.</h2>
-                        <p className="text-gray-500 text-[14px] md:text-xl leading-relaxed font-light">A collection of my latest projects, experiments, and case studies.</p>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark mb-4 sm:mb-6 tracking-tighter">Selected Works.</h2>
+                        <p className="text-gray-500 text-lg sm:text-xl leading-relaxed font-light">A collection of my latest projects, experiments, and case studies.</p>
                     </div>
                     <div className="mt-8 md:mt-0 text-gray-400 uppercase tracking-widest text-sm font-semibold">
                         ( {projectsData.length} Projects )
@@ -81,28 +81,28 @@ const ProjectsSection = () => {
                                 
                                 <div className="flex flex-col flex-1 p-6 sm:p-8 md:p-12 pt-4 md:pt-6">
                                     <div className="flex flex-col md:flex-row justify-between items-start mb-4 sm:mb-6 gap-3 sm:gap-4">
-                                        <h3 className="text-xl sm:text-3xl font-bold text-dark uppercase tracking-tight">{project.title}</h3>
-                                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-gray-400 text-base sm:text-xl md:pl-4 justify-start md:justify-end">
+                                        <h3 className="text-2xl sm:text-3xl font-bold text-dark uppercase tracking-tight">{project.title}</h3>
+                                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-gray-400 text-lg sm:text-xl md:pl-4 justify-start md:justify-end">
                                             {(project.tech_stack || '').split(',').map((item, idx) => {
                                                 const str = item.trim();
                                                 if (!str) return null;
                                                 if (str.startsWith('fa-')) {
                                                     return <i key={idx} className={`${str} hover:text-dark transition-colors`}></i>;
                                                 }
-                                                return <span key={idx} className="text-[9px] md:text-xs font-semibold text-gray-400 tracking-widest uppercase bg-gray-50 px-3 py-1 rounded-full border border-gray-100">{str}</span>;
+                                                return <span key={idx} className="text-xs font-semibold text-gray-400 tracking-widest uppercase bg-gray-50 px-3 py-1 rounded-full border border-gray-100">{str}</span>;
                                             })}
                                         </div>
                                     </div>
-                                    <p className="text-gray-500 mb-8 sm:mb-10 flex-1 text-[14px] sm:text-lg leading-relaxed font-light">{project.description}</p>
+                                    <p className="text-gray-500 mb-8 sm:mb-10 flex-1 text-base sm:text-lg leading-relaxed font-light">{project.description}</p>
                                     
                                     <a 
                                         href={project.link} 
                                         target="_blank" 
                                         rel="noreferrer" 
-                                        className="inline-flex items-center gap-3 bg-dark text-white px-8 py-4 md:px-10 md:py-4 rounded-full font-bold uppercase tracking-widest text-[10px] md:text-xs transition-all duration-500 hover:bg-white hover:text-dark hover:ring-1 hover:ring-dark hover:scale-105 w-fit group/btn shadow-lg shadow-dark/5"
+                                        className="inline-flex items-center gap-3 bg-dark text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs transition-all duration-500 hover:bg-white hover:text-dark hover:ring-1 hover:ring-dark hover:scale-105 w-fit group/btn shadow-lg shadow-dark/5"
                                     >
                                         Explore Work 
-                                        <ExternalLink size={14} className="transition-transform duration-500 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
+                                        <ExternalLink size={16} className="transition-transform duration-500 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
                                     </a>
                                 </div>
                             </motion.div>

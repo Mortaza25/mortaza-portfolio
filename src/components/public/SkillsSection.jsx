@@ -33,8 +33,8 @@ const SkillsSection = () => {
                     className="mb-12 md:mb-20 flex flex-col md:flex-row md:items-end justify-between border-b border-gray-200 pb-10"
                 >
                     <div className="max-w-2xl">
-                        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark mb-4 sm:mb-6 tracking-tighter">Core Competencies.</h2>
-                        <p className="text-gray-500 text-[14px] md:text-xl leading-relaxed font-light">Technologies and tools I use to bring ideas to life.</p>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark mb-4 sm:mb-6 tracking-tighter">Core Competencies.</h2>
+                        <p className="text-gray-500 text-lg sm:text-xl leading-relaxed font-light">Technologies and tools I use to bring ideas to life.</p>
                     </div>
                 </motion.div>
 
@@ -50,10 +50,10 @@ const SkillsSection = () => {
                                 transition={{ duration: 0.6, ease: 'easeOut', delay: catIdx * 0.12 }}
                                 className="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden"
                             >
-                                <div className="px-5 py-5 border-b border-gray-100 flex items-center gap-3">
-                                    <cat.icon size={18} className="text-dark shrink-0" />
-                                    <h3 className="text-[15px] md:text-lg font-bold text-dark tracking-tight uppercase">{cat.label}</h3>
-                                    <span className="ml-auto text-[10px] md:text-xs text-gray-400 font-semibold tracking-widest">({catSkills.length})</span>
+                                <div className="px-7 pt-7 pb-5 border-b border-gray-100 flex items-center gap-3">
+                                    <cat.icon size={20} className="text-dark shrink-0" />
+                                    <h3 className="text-lg font-bold text-dark tracking-tight uppercase">{cat.label}</h3>
+                                    <span className="ml-auto text-xs text-gray-400 font-semibold tracking-widest">({catSkills.length})</span>
                                 </div>
 
                                 <motion.div
@@ -70,10 +70,10 @@ const SkillsSection = () => {
                                             className="flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3 sm:py-4 rounded-2xl border border-gray-100 hover:border-gray-300 transition-all duration-300 cursor-default group"
                                         >
                                             {skill.icon
-                                                ? <i className={`${skill.icon} text-lg md:text-2xl shrink-0`} style={{ color: skill.color || '#374151' }}></i>
-                                                : <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 font-bold text-[10px] md:text-sm shrink-0">{skill.name[0]}</div>
+                                                ? <i className={`${skill.icon} text-xl sm:text-2xl shrink-0`} style={{ color: skill.color || '#374151' }}></i>
+                                                : <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 font-bold text-xs sm:text-sm shrink-0">{skill.name[0]}</div>
                                             }
-                                            <span className="text-dark font-semibold text-[13px] md:text-base tracking-tight transition-transform duration-300">{skill.name}</span>
+                                            <span className="text-dark font-semibold text-sm sm:text-base tracking-tight transition-transform duration-300">{skill.name}</span>
                                         </motion.div>
                                     ))}
                                 </motion.div>
