@@ -31,9 +31,15 @@ const Navbar = () => {
     return (
         <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-transparent ${scrolled ? 'bg-white/90 backdrop-blur-md border-gray-100 shadow-sm py-4' : 'bg-transparent py-4 md:py-6'}`}>
             <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-                <div className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-dark relative z-50">
-                    Mortaza.
-                </div>
+                <Link to="hero" smooth={true} duration={500} className="cursor-pointer">
+                    <motion.div 
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter text-dark relative z-50 transition-all"
+                    >
+                        Mortaza<span className="text-gray-400">.</span>
+                    </motion.div>
+                </Link>
                 
                 {/* Desktop Nav */}
                 <div className="hidden md:flex space-x-10 text-base">

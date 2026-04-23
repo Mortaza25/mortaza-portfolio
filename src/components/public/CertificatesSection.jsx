@@ -51,11 +51,27 @@ const CertificatesSection = () => {
     const isInteracting = useRef(false);
     const resumeTimeout = useRef(null);
 
+    const velocityRef = useRef(0);
+    const isDragging = useRef(false);
+    const lastX = useRef(0);
+
     // Auto-scroll speed
     const speed = -0.8; 
 
     useAnimationFrame((t, delta) => {
-        if (!isInteracting.current) {
+        if (isDragging.current) return;
+
+        if (isInteracting.current) {
+            // Apply momentum
+            baseX.set(baseX.get() + velocityRef.current);
+            velocityRef.current *= 0.95; // Friction
+
+            // If it slows down enough, resume auto-scroll
+            if (Math.abs(velocityRef.current) < 0.1) {
+                isInteracting.current = false;
+            }
+        } else {
+            // Standard auto-scroll
             let moveBy = speed * (delta / 16);
             baseX.set(baseX.get() + moveBy);
         }
@@ -68,9 +84,6 @@ const CertificatesSection = () => {
     // Smooth infinite wrapping
     const x = useTransform(baseX, (v) => `${wrap(-totalContentWidth, 0, v)}px`);
 
-    const isDragging = useRef(false);
-    const lastX = useRef(0);
-
     const handleInteractionstart = () => {
         isInteracting.current = true;
         if (resumeTimeout.current) clearTimeout(resumeTimeout.current);
@@ -78,17 +91,14 @@ const CertificatesSection = () => {
 
     const handleInteractionEnd = () => {
         isDragging.current = false;
-        if (resumeTimeout.current) clearTimeout(resumeTimeout.current);
-        resumeTimeout.current = setTimeout(() => {
-            isInteracting.current = false;
-        }, 800);
+        // Don't set isInteracting false yet, let momentum play
     };
 
     // Touchpad/Wheel Support
     const onWheel = (e) => {
         handleInteractionstart();
         const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-        baseX.set(baseX.get() - delta * 0.8);
+        velocityRef.current = -delta * 0.5;
         handleInteractionEnd();
     };
 
@@ -97,12 +107,14 @@ const CertificatesSection = () => {
         handleInteractionstart();
         isDragging.current = true;
         lastX.current = clientX;
+        velocityRef.current = 0;
     };
 
     const onMove = (clientX) => {
         if (!isDragging.current) return;
         const deltaX = clientX - lastX.current;
         baseX.set(baseX.get() + deltaX);
+        velocityRef.current = deltaX; // Track velocity
         lastX.current = clientX;
     };
 
